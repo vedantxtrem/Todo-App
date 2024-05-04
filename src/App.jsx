@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <AddTodo updatelist={(todo)=> setList([...list,{id: list.length + 1 ,todoData : todo,finished : false}])} />
-      <TodoList list={list} />
+      <TodoList list={list} updatelist={setList} />
     </>
   )
 }
