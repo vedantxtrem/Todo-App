@@ -8,6 +8,7 @@ function TodoList({list}) {
             {list.length > 0 && list.map(todo => <Todo  
             todoData={todo.todoData} 
             isFinished={todo.finished} 
+            
             id = {todo.id} 
             key ={todo.id}
             changeFinished ={(isFinished)=>{
