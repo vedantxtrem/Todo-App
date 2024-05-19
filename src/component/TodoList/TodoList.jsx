@@ -2,43 +2,44 @@
 import { useContext } from 'react';
 import Todo from '../Todo/Todo'
 import TodoContext from '../context/TodoContext.js';
+import TodoDispatchcontext from '../context/TodoDispatchcontext.js';
+
+
 
 function TodoList() {
-    const {list,setList} = useContext(TodoContext);
+    const { list } = useContext(TodoContext);
+    const { dispatch } = useContext(TodoDispatchcontext)
 
-    return(
+    function onfinished(todo, isFinished) {
+        console.log("finished called");
+        dispatch({ type: 'finish_todo', payload: { todo, isFinished: isFinished } })
+    }
+
+    function onDelete(todo) {
+        console.log("delete called");
+        dispatch({ type: 'delete_todo', payload: { todo } })
+    }
+
+    function onEdit(todo, todoText) {
+        console.log("called edit");
+        dispatch({ type: 'edit_todo', payload: { todo, todoText } })
+    }
+
+    return (
         <div>
-            {list.length > 0 && list.map(todo => <Todo  
-            todoData={todo.todoData} 
-            isFinished={todo.finished} 
-            id = {todo.id} 
-            key ={todo.id}
-            changeFinished ={(isFinished)=>{
-                console.log("isfinished",isFinished);
-                const updatelist =  list.map(t =>{
-                    if(t.id == todo.id){
-                        todo.finished = isFinished;
-                    }
-                    return t;
-                });
-                setList(updatelist);
-                
-            }}
-            onDelete = {()=>{
-                const updatelist =  list.filter(t => t.id != todo.id);
-                setList(updatelist);
-            }}
+            {list.length > 0 && list.map(todo => <Todo
+                todoData={todo.todoData}
+                isFinished={todo.finished}
+                id={todo.id}
+                key={todo.id}
 
-            onEdit = {(todoText)=>{
-                const updatelist =  list.map(t =>{
-                    if(t.id == todo.id){
-                        todo.todoData = todoText;
-                    }
-                    return t;
-                });
-                setList(updatelist);
-            }}
-            />) }
+                changeFinished={(isFinished) => onfinished(todo, isFinished)}
+
+                onDelete={() => onDelete(todo)}
+
+                onEdit={(todoText) => onEdit(todo, todoText)}
+
+            />)}
         </div>
     )
 }
