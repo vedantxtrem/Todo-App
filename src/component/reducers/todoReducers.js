@@ -1,46 +1,39 @@
+import { ADD_TODO, DELETE_TODO, EDIT_TODO, FINISH_TODO } from "../Constants/action";
 
+function todoReducer(state = [], action) {
+    
+    switch (action.type) {
+        case ADD_TODO:
+            let todoText = action.payload.todoText;
+            return [...state, { id: state.length + 1, todoData: todoText, finished: false }];
+        
+        case DELETE_TODO:
+            let todoToDelete = action.payload.todo;
+            return state.filter(t => t.id != todoToDelete.id);
+        
+        case EDIT_TODO:
+            let todoToEdit = action.payload.todo;
+            let updatedText = action.payload.todoText;
+            return state.map(t => {
+                if (t.id == todoToEdit.id) {
+                    return { ...t, todoData: updatedText };
+                }
+                return t;
+            });
 
-function todoReducer(state, action) {
+        case FINISH_TODO:
+            let todoToFinish = action.payload.todo;
+            let isFinished = action.payload.isFinished;
+            return state.map(t => {
+                if (t.id == todoToFinish.id) {
+                    return { ...t, finished: isFinished };
+                }
+                return t;
+            });
 
-    if (action.type == 'add_todo') {
-        let todo = action.payload.todo;
-        let todoText = action.payload.todoText;
-        return [...state, { id: state.length + 1, todoData: todoText, finished: false }];
-
+        default:
+            return state;
     }
-    else if (action.type == 'delete_todo') {
-        let todo = action.payload.todo;
-
-        const updatelist = state.filter(t => t.id != todo.id);
-        return updatelist;
-    }
-    else if (action.type == 'edit_todo') {
-        let todo = action.payload.todo;
-
-        let todoText = action.payload.todoText;
-
-        const updatelist = state.map(t => {
-            if (t.id == todo.id) {
-                todo.todoData = todoText;
-            }
-            return t;
-        });
-        return (updatelist);
-    }
-    else if (action.type == 'finish_todo') {
-        let todo = action.payload.todo;
-        let isFinished = action.payload.isFinished;
-
-        const updatedList = state.map(t => {
-            if (t.id == todo.id) {
-                todo.finished = isFinished;
-            }
-            return t;
-        });
-        return updatedList;
-    }
-
-
 }
 
 export default todoReducer;
