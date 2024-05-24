@@ -9,10 +9,10 @@ function App() {
   const actions = bindActionCreators({add_todo,delete_todo,todoFinished,editTodo},dispatch);
 
   return (
-    <>
+    <div className='w-full h-screen flex flex-col gap-4 items-center justify-center bg-gray-800'>
       <AddTodo add_todo={actions.add_todo}/>
       <TodoList delete_todo={actions.delete_todo} editTodo={actions.editTodo} todoFinished={actions.todoFinished}/>
-    </>
+    </div>
   )
 }
 
