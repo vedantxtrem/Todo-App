@@ -1,3 +1,6 @@
 # Todo App
 
-### use of context-Api
+## About ..
+
+IN this project ,I learn context api , react- redux..
+
